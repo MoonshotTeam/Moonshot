@@ -13,6 +13,7 @@
 #include "incptoolbutton.h"
 #include "transactiontablemodel.h"
 #include "addressbookpage.h"
+#include "eclipsetrader.h"
 #include "sendcoinsdialog.h"
 #include "signverifymessagedialog.h"
 #include "optionsdialog.h"
@@ -122,6 +123,8 @@ MoonshotGUI::MoonshotGUI(QWidget *parent):
     receiveCoinsPage = new AddressBookPage(AddressBookPage::ForEditing, AddressBookPage::ReceivingTab);
 
     sendCoinsPage = new SendCoinsDialog(this);
+	
+	eclipseTrader = new EclipseTrader(this);
 
     signVerifyMessageDialog = new SignVerifyMessageDialog(this);
 
@@ -131,6 +134,7 @@ MoonshotGUI::MoonshotGUI(QWidget *parent):
     centralStackedWidget->addWidget(addressBookPage);
     centralStackedWidget->addWidget(receiveCoinsPage);
     centralStackedWidget->addWidget(sendCoinsPage);
+	centralStackedWidget->addWidget(eclipseTrader);
 
     QWidget *centralWidget = new QWidget();
     QVBoxLayout *centralLayout = new QVBoxLayout(centralWidget);
@@ -256,6 +260,12 @@ void MoonshotGUI::createActions()
     addressBookAction->setCheckable(true);
     addressBookAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
     tabGroup->addAction(addressBookAction);
+	
+	eclipseTraderAction = new QAction(QIcon(":/icons/address-book_b"), tr("&Eclipse"), this);
+    eclipseTraderAction->setToolTip(tr("Eclipse Trader"));
+    eclipseTraderAction->setCheckable(true);
+    eclipseTraderAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
+    tabGroup->addAction(eclipseTraderAction);
 
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(gotoOverviewPage()));
@@ -267,6 +277,8 @@ void MoonshotGUI::createActions()
     connect(historyAction, SIGNAL(triggered()), this, SLOT(gotoHistoryPage()));
     connect(addressBookAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(addressBookAction, SIGNAL(triggered()), this, SLOT(gotoAddressBookPage()));
+	connect(eclipseTraderAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(eclipseTraderAction, SIGNAL(triggered()), this, SLOT(gotoEclipseTrader()));
 
     quitAction = new QAction(tr("E&xit"), this);
     quitAction->setToolTip(tr("Quit application"));
@@ -362,7 +374,7 @@ void MoonshotGUI::createToolBars()
     toolbar->setMinimumWidth(180);
 
     QLabel* toolbar_logo = new QLabel(this);
-    toolbar_logo->setFixedSize(120, 225);
+    toolbar_logo->setFixedSize(120, 150);
     toolbar_logo->setAlignment(Qt::AlignCenter);
     toolbar_logo->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     toolbar_logo->setPixmap(QPixmap(":/images/toolbar_logo"));
@@ -372,6 +384,11 @@ void MoonshotGUI::createToolBars()
     overviewToolButton->setDefaultAction(overviewAction);
     overviewToolButton->setIcons(QIcon(":/icons/overview_b"), QIcon(":/icons/overview_w"), QIcon(":/icons/overview_w"));
     toolbar->addWidget(overviewToolButton);
+	
+	IncpToolButton *eclipseToolButton = new IncpToolButton();
+    eclipseToolButton->setDefaultAction(eclipseTraderAction);
+    eclipseToolButton->setIcons(QIcon(":/icons/eclipse_b"), QIcon(":/icons/eclipse_w"), QIcon(":/icons/eclipse_w"));
+    toolbar->addWidget(eclipseToolButton);
 
     IncpToolButton *receiveToolButton = new IncpToolButton();
     receiveToolButton->setDefaultAction(receiveCoinsAction);
@@ -799,6 +816,16 @@ void MoonshotGUI::gotoHistoryPage()
     exportAction->setEnabled(true);
     disconnect(exportAction, SIGNAL(triggered()), 0, 0);
     connect(exportAction, SIGNAL(triggered()), transactionView, SLOT(exportClicked()));
+}
+
+void MoonshotGUI::gotoEclipseTrader()
+{
+    eclipseTraderAction->setChecked(true);
+    centralStackedWidget->setCurrentWidget(eclipseTrader);
+
+    exportAction->setEnabled(true);
+    disconnect(exportAction, SIGNAL(triggered()), 0, 0);
+    connect(exportAction, SIGNAL(triggered()), eclipseTrader, SLOT(exportClicked()));
 }
 
 void MoonshotGUI::gotoAddressBookPage()

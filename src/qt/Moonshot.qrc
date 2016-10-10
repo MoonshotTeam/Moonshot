@@ -83,6 +83,7 @@
         <file alias="transaction_conflicted_w">res/icons/white/transaction_conflicted_w.png</file>
         <file alias="tx_inout_w">res/icons/white/tx_inout_w.png</file>
         <file alias="tx_input_w">res/icons/white/tx_input_w.png</file>
+		<file alias="eclipse_w">res/icons/white/eclipse_w.png</file>
         <file alias="tx_mined_w">res/icons/white/tx_mined_w.png</file>
         <file alias="tx_output_w">res/icons/white/tx_output_w.png</file>
         <file alias="down_arrow_w">res/icons/white/downarrow_w.png</file>
@@ -110,7 +111,8 @@
         <file alias="tx_mined_b">res/icons/blue/tx_mined_b.png</file>
         <file alias="tx_output_b">res/icons/blue/tx_output_b.png</file>
         <file alias="connect_0_b">res/icons/blue/connect0_b.png</file>
-        <file alias="connect_1_b">res/icons/blue/connect1_b.png</file>
+        <file alias="connect_1_b">res/icons/blue/connect1_b.png</file>		
+		<file alias="eclipse_b">res/icons/blue/eclipse_b.png</file>		
         <file alias="connect_2_b">res/icons/blue/connect2_b.png</file>
         <file alias="connect_3_b">res/icons/blue/connect3_b.png</file>
         <file alias="connect_4_b">res/icons/blue/connect4_b.png</file>
